@@ -62,3 +62,117 @@ def index(request):
 
 
     return render(request,'index.html',locals())
+
+def post(request):
+    if request.method == "POST":
+        mess = request.POST['username']
+        print(f"mess={mess}")
+    else:
+        mess = "表單資料尚未送出!"
+    return render(request,"post.html",{"mess":mess})
+
+
+def post1(request): #新增資料到資料庫，不做驗證
+    if request.method == "POST":
+        uname = request.POST['name']
+        usex = request.POST['sex']
+        ubirthday = request.POST['birthday']
+        uemail = request.POST['email']
+        uphone = request.POST['phone']
+        uaddress = request.POST['address']
+        addinfo = student.objects.create(name=uname,sex=usex,birthday=ubirthday,email=uemail,phone=uphone,address=uaddress)
+        addinfo.save()
+        return redirect(reverse(index))
+    else:
+        message = "請輸入資料(資料不做驗證)"
+    return render(request,"post1.html",{"message":message})
+
+
+from studentsapp.form import PostForm
+def postform(request):
+    if request.method == "POST":
+        postform = PostForm(request.POST)
+        if postform.is_valid():
+            uname = postform.cleaned_data["name"]
+            print(uname)
+        else:
+            print("驗證錯誤")
+    else:
+        print("沒有輸入資料")
+        postform = PostForm()
+    return render(request,"postform.html",locals())
+
+
+def post2(request):
+    if request.method == "POST":
+        postform = PostForm(request.POST)
+        if postform.is_valid():
+            uname = postform.cleaned_data["name"]
+            usex = postform.cleaned_data["sex"]
+            ubirthday = postform.cleaned_data["birthday"]
+            uemail = postform.cleaned_data["email"]
+            uphone = postform.cleaned_data["phone"]
+            uaddress = postform.cleaned_data["address"]
+            addinfo = student.objects.create(name=uname,sex=usex,birthday=ubirthday,email=uemail,phone=uphone,address=uaddress)
+            addinfo.save()
+            print("已儲存!")
+            return redirect(reverse(index))
+        else:
+            print(postform.errors) #postform.errors抓住錯誤訊息
+            message = "驗證錯誤，請重新輸入"
+    else:
+        message = "姓名、性別、生日必須輸入"
+        postform = PostForm()
+    return render(request,"post2.html",{"message":message,"postform":postform})
+
+
+def delete(request,id=None):
+    if id != None:
+        if request.method == "GET":
+            userid = id
+        try:
+            unit = student.objects.get(id=userid)
+            unit.delete()
+            return redirect(reverse(index))
+        except:
+            message = "讀取錯誤"
+    
+            return render(request,"delete.html",{"message":message})
+
+
+def edit(request,id,mode=None):
+    if mode == "edit":
+        unit = student.objects.get(id=id)
+        unit.name = request.GET['new_name']
+        unit.sex = request.GET['new_sex']
+        unit.birthday = request.GET['new_birthday']
+        unit.email = request.GET['new_email']
+        unit.phone = request.GET['new_phone']
+        unit.address = request.GET['new_address']
+        unit.save()
+        # message = "已修改..."
+        return redirect(reverse(index))
+    else:
+        try:
+            unit = student.objects.get(id=id)
+        except:
+            message = "此 id 不存在"
+        
+        # 如果要傳送的變數，時而有值;時而沒值的情況，採用locals()方式傳送變數會比較好
+        return render(request,"edit.html",locals())
+    
+
+def edit2(request,id=None,mode=None):
+    if mode == "load":
+        unit = student.objects.get(id=id)
+        return render(request,"edit2.html",locals())
+    elif mode == "save":
+        unit = student.objects.get(id=id)
+        unit.name = request.POST['new_name']
+        unit.sex = request.POST['new_sex']
+        unit.birthday = request.POST['new_birthday']
+        unit.email = request.POST['new_email']
+        unit.phone = request.POST['new_phone']
+        unit.address = request.POST['new_address']
+        unit.save()
+        return redirect(reverse(index))

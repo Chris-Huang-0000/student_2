@@ -22,7 +22,15 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('listone/',views.listone),
     path('listall/',views.listall),
-
+    path('index/',views.index),
+    path('post/',views.post),
+    path('post1/',views.post1), #資料新增，不做驗證
+    path('postform/',views.postform),
+    path('post2/',views.post2), #資料新增，做驗證
+    path('delete/<int:id>/',views.delete), #刪除資料
+    path('edit/<int:id>/',views.edit),
+    path('edit/<int:id>/<str:mode>/',views.edit),
+    path('edit2/<int:id>/<str:mode>/',views.edit2),
 ]
 
 
