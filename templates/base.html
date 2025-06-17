@@ -1,0 +1,17 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>{% block title %}顯示所有資料{% endblock %}</title>
+    </head>
+    <script>
+        {% block script %} {% endblock %}
+    </script>
+    <style>
+        table{background-color:bisque;}
+        {% block style %} {% endblock %}
+    </style>
+    <body>
+        {% block content %} {% endblock %}
+    </body>
+</html>

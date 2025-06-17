@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html lang="zh-tw">
+<head>
+    <meta charset="UTF-8">
+    <title>Student 資料表新增(二)</title>
+</head>
+<body>
+    <h2>Student 資料表新增(二) &nbsp;
+        <input type="button" value="回到上一頁" name="back" onclick="history.back()">
+    </h2>
+    <form action="" method="post" name="form2">
+        {% csrf_token %}
+        <table border="1" cellspacing="3" cellpadding="3">
+            <tr>
+                <th>姓名</th>
+                <td>{{postform.name}}</td>
+            </tr>
+            <tr>
+                <th>性別</th>
+                <td>
+                    <input type="radio" name="sex" id="sex1" value="M" checked="checked">男生</input>
+                    <input type="radio" name="sex" id="sex2" value="F">女生</input>
+                </td>
+            </tr>
+            <tr>
+                <th>生日</th>
+                <td>{{postform.birthday}}</td>
+            </tr>
+            <tr>
+                <th>郵件帳號</th>
+                <td>{{postform.email}}</td>
+            </tr>
+            <tr>
+                <th>電話</th>
+                <td>{{postform.phone}}</td>
+            </tr>
+            <tr>
+                <th>地址</th>
+                <td>{{postform.address}}</td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="submit" value="送出">
+                    <input type="reset" value="重設">
+                </td>
+            </tr>
+        </table>
+        <span style="color:red">{{message}}</span>
+    </form>
+</body>
+</html>

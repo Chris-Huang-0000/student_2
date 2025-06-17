@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+    <meta charset="UTF-8">
+    <title>基本表單驗證</title>
+</head>
+<body>
+    <h2>基本表單驗證</h2>
+    <form action="" method="post" name="form_check">
+        {% csrf_token %}
+        <table border="1" cellpadding="4" cellspacing="1">
+            {% comment %} 直接將建立的表單物件以HTML的表單呈現，要將表單物件變數+.as_table，但實務使用性上不高 {% endcomment %}
+            {% comment %} 在HTML中取用建立的表單物件的欄位，針對表單物件的外觀設計可以更靈活 {% endcomment %}
+            {{postform}}
+            {% comment %} <tr>
+                <td>姓名:</td>
+                <td>{{postform.name}}</td>
+            </tr> {% endcomment %}
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="submit" value="送出">
+                    <input type="reset" value="重設">
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

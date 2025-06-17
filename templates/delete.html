@@ -1,0 +1,18 @@
+<!DOCTYPE HTML>
+<html lang="zh-tw">
+<head>
+    <meta charset="UTF-8">
+    <title>資料表刪除</title>
+</head>
+<body>
+    <h2>student 資料表刪除 &nbsp;
+    <span style="font-size: 80%;"><a href="/listall/" target="_blank">顯示 student 所有資料</a></span>
+    </h2>
+    <form action="" method="get" name="form1">
+        {% csrf_token %}
+        <div>請輸入編號: <input type="text" name="id"></div>
+        <div><input type="submit" name="button" id="button" value="確定刪除"></div>
+        <span style="color:red">{{message}}</span>
+    </form>
+</body>
+</html>
